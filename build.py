@@ -107,8 +107,10 @@ else:
     log_info('Program version: V{}'.format(VERSION))
 
     # 检查release目录是否存在
-    st = os.stat('./release/').st_mode 
-    if S_ISDIR(st) == 0:
+    try:
+        st = os.stat('./release/').st_mode 
+    except FileNotFoundError:
+        log_warning('No release folder found. Make a new one.')
         os.mkdir('./release/')
 
     # 确定编译器
